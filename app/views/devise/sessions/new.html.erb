@@ -1,0 +1,33 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="container main-logo">
+    <div class="row">
+      <div class="col-md-12">
+        <div align="center"><h2>Demo Clock In-Out System</h2></div>
+      </div>
+    </div>
+    <%= render partial: 'partials/flashes' %>
+    <div class="login-panel card">
+        <div class="card-header">
+          <h4>Please Sign In</h4>
+        </div>
+        <div class="card-body">
+        <form role="form">
+            <fieldset>
+            <div class="form-group">
+                <%= f.label :email %><br/>
+                <%= f.email_field :email, autofocus: true,
+                                class: 'form-control', value: (cookies[:email] || '') %>
+            </div>
+            <div class="form-group">
+                <%= f.label :password %><br/>
+                <%= f.password_field :password, class: 'form-control', autocomplete: "off" %>
+            </div>
+            <%= f.submit "Log in", class: 'btn btn-lg btn-primary btn-block' %>
+            <br>
+            <%= link_to "Sign up", new_registration_path(resource_name), class: 'btn btn-lg btn-outline-secondary btn-block' %>
+            </fieldset>
+        </form>
+        </div>
+    </div>
+  </div>
+<%- end %>

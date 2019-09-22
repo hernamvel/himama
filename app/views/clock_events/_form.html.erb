@@ -1,0 +1,23 @@
+<%= simple_form_for(@clock_event) do |f| %>
+  <% if clock_event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(clock_event.errors.count, "error") %> prohibited this clock_event from being saved:</h2>
+
+      <ul>
+        <% clock_event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.input :event_type,
+                include_blank: false,
+                collection: event_type_options %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
