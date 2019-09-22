@@ -1,7 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user_id: 1
+liliana_1:
+  id: 1
+  event_type: clock_in
+  user_id: 2
 
-two:
-  user_id: 1
+liliana_2:
+  id: 2
+  user_id: 2
+  event_type: clock_out

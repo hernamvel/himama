@@ -1,48 +1,62 @@
 require 'test_helper'
 
-class ClockEventsControllerTest < ActionDispatch::IntegrationTest
+class ClockEventsControllerTest < ActionController::TestCase
+  include Devise::Test::ControllerHelpers
+
   setup do
-    @clock_event = clock_events(:one)
+    @user = users(:liliana)
+    sign_in(@user)
+    @clock_event = clock_events(:liliana_1)
   end
 
   test "should get index" do
-    get clock_events_url
-    assert_response :success
-  end
-
-  test "should get new" do
-    get new_clock_event_url
+    get :index
     assert_response :success
   end
 
   test "should create clock_event" do
     assert_difference('ClockEvent.count') do
-      post clock_events_url, params: { clock_event: { user_id: @clock_event.user_id } }
+      post :create
     end
-
-    assert_redirected_to clock_event_url(ClockEvent.last)
+    assert_redirected_to clock_events_url
   end
 
-  test "should show clock_event" do
-    get clock_event_url(@clock_event)
-    assert_response :success
+  test "should not create a clock event" do
+    ClockEvent.any_instance.stubs(:save).returns(false)
+    assert_no_difference('ClockEvent.count') do
+      post :create
+    end
+    assert_redirected_to clock_events_url
   end
 
   test "should get edit" do
-    get edit_clock_event_url(@clock_event)
+    get :edit, params: {id: @clock_event.id}
     assert_response :success
   end
 
   test "should update clock_event" do
-    patch clock_event_url(@clock_event), params: { clock_event: { user_id: @clock_event.user_id } }
-    assert_redirected_to clock_event_url(@clock_event)
+    patch :update,
+          params: { id: @clock_event.id,
+                    clock_event: {event_type: :clock_out }
+    }
+    assert_equal(ClockEvent.find(@clock_event.id).event_type, 'clock_out')
+    assert_redirected_to clock_events_url
   end
+
+  test "should not update clock_event" do
+    ClockEvent.any_instance.stubs(:save).returns(false)
+    patch :update,
+          params: { id: @clock_event.id,
+                    clock_event: {event_type: :clock_out }
+          }
+    assert_redirected_to clock_events_url
+  end
+
 
   test "should destroy clock_event" do
     assert_difference('ClockEvent.count', -1) do
-      delete clock_event_url(@clock_event)
+      delete :destroy, params: { id: @clock_event.id }
     end
-
     assert_redirected_to clock_events_url
   end
 end
