@@ -1,5 +1,5 @@
 class ClockEventsController < ApplicationController
-  before_action :set_clock_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_clock_event, only: [:edit, :update, :destroy]
 
   # GET /clock_events
   # GET /clock_events.json
@@ -7,17 +7,7 @@ class ClockEventsController < ApplicationController
     @clock_events = ClockEvent.order("id desc")
   end
 
-  # GET /clock_events/1
-  # GET /clock_events/1.json
-  def show
-  end
-
-  # GET /clock_events/new
-  def new
-    @clock_event = ClockEvent.new
-  end
-
-  # GET /clock_events/1/edit
+  # GET /clock_events/:id/edit
   def edit
   end
 
@@ -33,7 +23,7 @@ class ClockEventsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /clock_events/1
+  # PATCH/PUT /clock_events/:id
   def update
     @clock_event.event_type = params[:clock_event][:event_type]
     if @clock_event.save
@@ -43,13 +33,10 @@ class ClockEventsController < ApplicationController
     end
   end
 
-  # DELETE /clock_events/1
+  # DELETE /clock_events/:id
   def destroy
     @clock_event.destroy
-    respond_to do |format|
-      format.html { redirect_to clock_events_url, notice: 'Clock event was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to clock_events_url, notice: 'Clock event was successfully destroyed.'
   end
 
   private

@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "clock_events#index"
-  resources :clock_events
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :clock_events, except: [:new, :show]
 end
