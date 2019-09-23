@@ -4,7 +4,7 @@ class ClockEventsController < ApplicationController
   # GET /clock_events
   # GET /clock_events.json
   def index
-    @clock_events = ClockEvent.order("id desc")
+    @clock_events = ClockEvent.where(user_id: current_user.id).order("id desc")
   end
 
   # GET /clock_events/:id/edit
